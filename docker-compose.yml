@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  spark:
+    build: ./spark
+    volumes:
+      - ./spark/data:/data  # Mount the spark/data directory to /data in the container
+    ports:
+      - "4040:4040"
+    networks:
+      - app-network
+
+  postgres:
+    build: ./postgres
+    environment:
+      POSTGRES_DB: techdb
+      POSTGRES_USER: techuser
+      POSTGRES_PASSWORD: TechUser@2024
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  pgdata:
+
